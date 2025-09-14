@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 98%);
+  --foreground: hsl(222.2 84% 4.9%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222.2 84% 4.9%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222.2 84% 4.9%);
+  --primary: hsl(158 56% 22%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(32 81% 45%);
+  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+  --muted: hsl(210 40% 96%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(142 71% 45%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(158 56% 22%);
+  --chart-1: hsl(158 56% 22%);
+  --chart-2: hsl(32 81% 45%);
+  --chart-3: hsl(142 71% 45%);
+  --chart-4: hsl(0 84.2% 60.2%);
+  --chart-5: hsl(222.2 84% 4.9%);
+  --sidebar: hsl(0 0% 100%);
+  --sidebar-foreground: hsl(222.2 84% 4.9%);
+  --sidebar-primary: hsl(158 56% 22%);
+  --sidebar-primary-foreground: hsl(210 40% 98%);
+  --sidebar-accent: hsl(210 40% 96%);
+  --sidebar-accent-foreground: hsl(158 56% 22%);
+  --sidebar-border: hsl(214.3 31.8% 91.4%);
+  --sidebar-ring: hsl(158 56% 22%);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: hsl(222.2 84% 4.9%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222.2 47.4% 11.2%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222.2 47.4% 11.2%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(158 56% 22%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(32 81% 45%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+  --accent: hsl(142 71% 45%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(158 56% 22%);
+  --chart-1: hsl(158 56% 22%);
+  --chart-2: hsl(32 81% 45%);
+  --chart-3: hsl(142 71% 45%);
+  --chart-4: hsl(0 84.2% 60.2%);
+  --chart-5: hsl(210 40% 98%);
+  --sidebar: hsl(222.2 47.4% 11.2%);
+  --sidebar-foreground: hsl(210 40% 98%);
+  --sidebar-primary: hsl(158 56% 22%);
+  --sidebar-primary-foreground: hsl(210 40% 98%);
+  --sidebar-accent: hsl(217.2 32.6% 17.5%);
+  --sidebar-accent-foreground: hsl(158 56% 22%);
+  --sidebar-border: hsl(217.2 32.6% 17.5%);
+  --sidebar-ring: hsl(158 56% 22%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Ethiopian color scheme extensions */
+.ethiopian-green {
+  color: #16A34A;
+}
+
+.ethiopian-yellow {
+  color: #EAB308;
+}
+
+.ethiopian-red {
+  color: #DC2626;
+}
+
+.bg-ethiopian-green {
+  background-color: #16A34A;
+}
+
+.bg-ethiopian-yellow {
+  background-color: #EAB308;
+}
+
+.bg-ethiopian-red {
+  background-color: #DC2626;
+}
+
+.text-ethiopian-green {
+  color: #16A34A;
+}
+
+.text-ethiopian-yellow {
+  color: #EAB308;
+}
+
+.text-ethiopian-red {
+  color: #DC2626;
+}
+
+.border-ethiopian-green\/20 {
+  border-color: rgb(22 163 74 / 0.2);
+}
+
+.border-ethiopian-yellow\/20 {
+  border-color: rgb(234 179 8 / 0.2);
+}
+
+.border-ethiopian-red\/20 {
+  border-color: rgb(220 38 38 / 0.2);
+}
+
+.from-ethiopian-green\/5 {
+  --tw-gradient-from: rgb(22 163 74 / 0.05) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(22 163 74 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-ethiopian-yellow\/5 {
+  --tw-gradient-to: rgb(234 179 8 / 0.05) var(--tw-gradient-to-position);
+}
+
+.from-ethiopian-yellow\/5 {
+  --tw-gradient-from: rgb(234 179 8 / 0.05) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-ethiopian-red\/5 {
+  --tw-gradient-to: rgb(220 38 38 / 0.05) var(--tw-gradient-to-position);
+}
+
+.from-ethiopian-red\/5 {
+  --tw-gradient-from: rgb(220 38 38 / 0.05) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(220 38 38 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-ethiopian-green\/5 {
+  --tw-gradient-to: rgb(22 163 74 / 0.05) var(--tw-gradient-to-position);
+}
+
+.from-ethiopian-green\/10 {
+  --tw-gradient-from: rgb(22 163 74 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(22 163 74 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-ethiopian-yellow\/10 {
+  --tw-gradient-to: rgb(234 179 8 / 0.1) var(--tw-gradient-to-position);
+}
+
+.bg-ethiopian-green\/10 {
+  background-color: rgb(22 163 74 / 0.1);
+}
+
+.bg-ethiopian-yellow\/10 {
+  background-color: rgb(234 179 8 / 0.1);
+}
+
+.bg-ethiopian-red\/10 {
+  background-color: rgb(220 38 38 / 0.1);
+}

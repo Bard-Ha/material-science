@@ -20,7 +20,6 @@ interface PropertyFormProps {
 
 export default function PropertyForm({ onPredictionComplete }: PropertyFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [useAnthropic, setUseAnthropic] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<PropertiesToCompositionRequest>({
@@ -42,7 +41,6 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
     try {
       const response = await apiRequest("POST", "/api/predict/composition", {
         properties: data,
-        useAnthropic,
       });
 
       const result = await response.json();
@@ -72,15 +70,6 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h4 className="text-md font-semibold text-foreground">Define Material Properties</h4>
-        <div className="flex items-center space-x-2">
-          <Label htmlFor="ai-model" className="text-sm">Use Anthropic</Label>
-          <Switch
-            id="ai-model"
-            checked={useAnthropic}
-            onCheckedChange={setUseAnthropic}
-            data-testid="switch-ai-model"
-          />
-        </div>
       </div>
 
       <Form {...form}>

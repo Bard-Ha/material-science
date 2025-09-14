@@ -19,7 +19,6 @@ interface CompositionFormProps {
 
 export default function CompositionForm({ onPredictionComplete }: CompositionFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [useAnthropic, setUseAnthropic] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<CompositionToPropertiesRequest>({
@@ -58,7 +57,6 @@ export default function CompositionForm({ onPredictionComplete }: CompositionFor
     try {
       const response = await apiRequest("POST", "/api/predict/properties", {
         composition: data,
-        useAnthropic,
       });
 
       const result = await response.json();
@@ -90,15 +88,6 @@ export default function CompositionForm({ onPredictionComplete }: CompositionFor
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h4 className="text-md font-semibold text-foreground">Input Material Composition</h4>
-        <div className="flex items-center space-x-2">
-          <Label htmlFor="ai-model-comp" className="text-sm">Use Anthropic</Label>
-          <Switch
-            id="ai-model-comp"
-            checked={useAnthropic}
-            onCheckedChange={setUseAnthropic}
-            data-testid="switch-ai-model-composition"
-          />
-        </div>
       </div>
 
       <Form {...form}>

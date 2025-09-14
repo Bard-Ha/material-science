@@ -13,9 +13,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/predict/composition", async (req, res) => {
     try {
       const validatedData = propertiesToCompositionSchema.parse(req.body.properties);
-      const useAnthropic = req.body.useAnthropic || false;
-      
-      const prediction = await predictCompositionFromProperties(validatedData, useAnthropic);
+      const prediction = await predictCompositionFromProperties(validatedData);
       
       // Store prediction
       const materialPrediction = await storage.createMaterialPrediction({
@@ -24,7 +22,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         inputData: validatedData,
         outputData: prediction,
         confidence: prediction.confidence,
-        aiModel: useAnthropic ? "anthropic" : "openai",
+        aiModel: "openai",
       });
 
       res.json({ success: true, prediction, id: materialPrediction.id });
@@ -40,9 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/predict/properties", async (req, res) => {
     try {
       const validatedData = compositionToPropertiesSchema.parse(req.body.composition);
-      const useAnthropic = req.body.useAnthropic || false;
-      
-      const prediction = await predictPropertiesFromComposition(validatedData, useAnthropic);
+      const prediction = await predictPropertiesFromComposition(validatedData);
       
       // Store prediction
       const materialPrediction = await storage.createMaterialPrediction({
@@ -51,7 +47,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         inputData: validatedData,
         outputData: prediction,
         confidence: prediction.confidence,
-        aiModel: useAnthropic ? "anthropic" : "openai",
+        aiModel: "openai",
       });
 
       res.json({ success: true, prediction, id: materialPrediction.id });

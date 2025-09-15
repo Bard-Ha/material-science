@@ -77,37 +77,59 @@ export default function Dashboard() {
               <p className="text-muted-foreground mt-1">AI-powered material composition and property prediction</p>
             </div>
           </div>
-          <Button 
-            onClick={handleExportResults}
-            disabled={!predictionResult}
-            data-testid="button-export-results"
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Export Results
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              onClick={handleExportResults}
+              disabled={!predictionResult}
+              className="atomic-button h-12 px-6"
+              data-testid="button-export-results"
+            >
+              <Download className="mr-2 h-5 w-5 animate-particle-drift" />
+              📊 Export Results
+            </Button>
+            {predictionResult && (
+              <Button 
+                onClick={() => window.location.reload()}
+                className="atomic-button h-12 px-6"
+                variant="outline"
+              >
+                <Atom className="mr-2 h-5 w-5 animate-atomic-pulse" />
+                🔄 New Analysis
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Input Method Selection */}
-        <Card className="molecular-card">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Zap className="mr-2 h-5 w-5 animate-molecular-float" />
-              Discovery Method
+        <Card className="molecular-card shadow-2xl">
+          <CardHeader className="pb-6">
+            <CardTitle className="flex items-center text-2xl font-bold material-text">
+              <Zap className="mr-4 h-8 w-8 animate-energy-wave" />
+              🔬 Discovery Method
             </CardTitle>
-            <div className="flex space-x-4">
+            <p className="text-muted-foreground mt-2 text-lg">Choose your AI-powered material discovery approach</p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <Button
                 onClick={() => setActiveTab("properties")}
+                className={`atomic-button h-16 text-lg font-bold transition-all duration-300 ${activeTab === "properties" ? "scale-105 shadow-xl" : "opacity-70 hover:opacity-90"}`}
                 variant={activeTab === "properties" ? "default" : "outline"}
                 data-testid="tab-properties-to-composition"
               >
-                Properties → Composition
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl mb-1">🎯</div>
+                  Properties → Composition
+                </div>
               </Button>
               <Button
                 onClick={() => setActiveTab("composition")}
+                className={`atomic-button h-16 text-lg font-bold transition-all duration-300 ${activeTab === "composition" ? "scale-105 shadow-xl" : "opacity-70 hover:opacity-90"}`}
                 variant={activeTab === "composition" ? "default" : "outline"}
                 data-testid="tab-composition-to-properties"
               >
-                Composition → Properties
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl mb-1">🧪</div>
+                  Composition → Properties
+                </div>
               </Button>
             </div>
           </CardHeader>

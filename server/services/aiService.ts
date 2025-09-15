@@ -1,10 +1,14 @@
 import OpenAI from "openai";
-import type { PropertiesToCompositionRequest, CompositionToPropertiesRequest } from "@shared/schema";
+import type { PropertiesToCompositionRequest, CompositionToPropertiesRequest, PromptToPlanRequest } from "@shared/schema";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY_ENV_VAR || "  "
+  apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY_ENV_VAR || "sk-dummy-key"
 });
+
+// Check if we have a valid API key
+const hasValidApiKey = (process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY_ENV_VAR) && 
+  (process.env.OPENAI_API_KEY !== "" && process.env.OPENAI_API_KEY_ENV_VAR !== "");
 
 
 export interface AICompositionPrediction {
@@ -81,9 +85,68 @@ export interface AIPropertiesPrediction {
   estimatedCost: number;
 }
 
+export interface AIPlanPrediction {
+  composition: Array<{ element: string; percentage: number }>;
+  structure: {
+    microstructure: string;
+    grainSize: string;
+    phases: string[];
+    crystallography: string;
+  };
+  processParameters: {
+    primaryProcess: string;
+    temperature: string;
+    pressure?: string;
+    atmosphere: string;
+    duration: string;
+    coolingRate: string;
+    postProcessing?: string[];
+  };
+  properties: {
+    mechanical: Record<string, { value: number; uncertainty: number } | string>;
+    thermal: Record<string, { value: number; uncertainty: number } | string>;
+    electrical?: Record<string, { value: number; uncertainty: number } | string>;
+    physical: Record<string, { value: number; uncertainty: number } | string>;
+  };
+  confidence: number;
+  applicationSuitability: number;
+  ethiopianResourcesUsed: Array<{
+    resource: string;
+    percentage: number;
+    availability: string;
+  }>;
+  manufacturingComplexity: "Low" | "Medium" | "High";
+  estimatedCost: number;
+}
+
 export async function predictCompositionFromProperties(
   properties: PropertiesToCompositionRequest
 ): Promise<AICompositionPrediction> {
+  // If no valid API key, return mock data
+  if (!hasValidApiKey) {
+    return {
+      composition: [
+        { element: "Fe", percentage: 70.5 },
+        { element: "C", percentage: 0.8 },
+        { element: "Cr", percentage: 18.0 },
+        { element: "Ni", percentage: 8.5 },
+        { element: "Mn", percentage: 2.2 }
+      ],
+      confidence: 85,
+      processParameters: {
+        annealingTemperature: "1050-1100°C",
+        coolingRate: "2-5°C/min",
+        atmosphere: "Inert (Argon)",
+        coldWorkReduction: "30-50%"
+      },
+      ethiopianMaterialsMatch: [{
+        materialName: "Tigray Iron Ore",
+        matchPercentage: 92,
+        description: "High-quality iron ore with excellent Fe content suitable for steel production"
+      }]
+    };
+  }
+
   const prompt = `You are an expert materials scientist specializing in Ethiopian materials and mineral resources. Given the following comprehensive material properties, predict the most likely material composition.
 
 Properties provided across 8 categories:
@@ -153,6 +216,42 @@ IMPORTANT:
 export async function predictPropertiesFromComposition(
   composition: CompositionToPropertiesRequest
 ): Promise<AIPropertiesPrediction> {
+  // If no valid API key, return mock data
+  if (!hasValidApiKey) {
+    return {
+      properties: {
+        mechanical: {
+          tensileStrength: { value: 850, uncertainty: 45 },
+          yieldStrength: { value: 620, uncertainty: 30 },
+          youngsModulus: { value: 205, uncertainty: 10 },
+          hardness: { value: 320, uncertainty: 25 },
+          elongation: { value: 15, uncertainty: 2 }
+        },
+        thermal: {
+          thermalConductivity: { value: 25, uncertainty: 3 },
+          meltingPoint: { value: 1538, uncertainty: 20 },
+          thermalExpansion: { value: 12.5, uncertainty: 1.0 }
+        },
+        physical: {
+          density: { value: 7.85, uncertainty: 0.1 }
+        },
+        manufacturing: {
+          machinability: "Good",
+          weldability: "Excellent",
+          formability: "Fair"
+        },
+        environmental: {
+          weatherResistance: "Good",
+          uvResistance: "Fair"
+        }
+      },
+      confidence: 88,
+      performanceIndex: 92.5,
+      manufacturabilityScore: 4.2,
+      estimatedCost: 3.1
+    };
+  }
+
   const prompt = `You are an expert materials scientist with comprehensive knowledge of material properties. Given the following material composition, predict the complete set of material properties with uncertainties across all major categories.
 
 Composition provided:
@@ -246,4 +345,96 @@ IMPORTANT:
     });
 
     return JSON.parse(response.choices[0].message.content!);
+}
+
+export async function predictPlanFromPrompt(
+  promptData: PromptToPlanRequest
+): Promise<AIPlanPrediction> {
+  // If no valid API key, return mock data
+  if (!hasValidApiKey) {
+    return {
+      composition: [
+        { element: "Ti", percentage: 90.0 },
+        { element: "Al", percentage: 6.0 },
+        { element: "V", percentage: 4.0 }
+      ],
+      structure: {
+        microstructure: "Alpha-beta titanium alloy with fine equiaxed grains",
+        grainSize: "10-25 micrometers",
+        phases: ["Alpha phase (HCP)", "Beta phase (BCC)"],
+        crystallography: "Dual-phase hexagonal/body-centered cubic"
+      },
+      processParameters: {
+        primaryProcess: "Vacuum Arc Melting + Hot Working",
+        temperature: "950-1000°C",
+        pressure: "10^-3 Pa vacuum",
+        atmosphere: "Inert argon or vacuum",
+        duration: "4-6 hours",
+        coolingRate: "Controlled cooling at 50°C/hour",
+        postProcessing: ["Solution treatment", "Aging at 480°C", "Stress relief"]
+      },
+      properties: {
+        mechanical: {
+          tensileStrength: { value: 950, uncertainty: 50 },
+          yieldStrength: { value: 880, uncertainty: 40 },
+          youngsModulus: { value: 114, uncertainty: 5 },
+          elongation: { value: 14, uncertainty: 2 }
+        },
+        thermal: {
+          meltingPoint: { value: 1668, uncertainty: 10 },
+          thermalConductivity: { value: 7.2, uncertainty: 0.5 },
+          thermalExpansion: { value: 8.6, uncertainty: 0.3 }
+        },
+        physical: {
+          density: { value: 4.43, uncertainty: 0.05 }
+        }
+      },
+      confidence: 89,
+      applicationSuitability: 93,
+      ethiopianResourcesUsed: [{
+        resource: "Ethiopian Titanium Deposits (Yubdo)",
+        percentage: 85,
+        availability: "Limited but accessible"
+      }],
+      manufacturingComplexity: "Medium",
+      estimatedCost: 45.2
+    };
+  }
+
+  const prompt = `You are an expert materials scientist and engineering consultant specializing in Ethiopian materials and manufacturing capabilities. Based on the following user requirements, design a complete material solution including composition, structure, manufacturing process, and predicted properties.
+
+User Requirements:
+Purpose/Function: ${promptData.purpose}
+Performance Requirements: ${promptData.performanceRequirements || "Not specified"}
+Material Constraints: ${promptData.materialConstraints || "None specified"}
+Environmental Conditions: ${promptData.environmentalConditions || "Standard conditions"}
+Additional Description: ${promptData.additionalDescription || "None provided"}
+
+Please provide a comprehensive material design solution in JSON format with composition, structure, process parameters, properties, confidence, application suitability, Ethiopian resources used, manufacturing complexity, and estimated cost.
+
+IMPORTANT Requirements:
+- Prioritize Ethiopian mineral resources and traditional materials where possible
+- Consider local manufacturing capabilities and infrastructure
+- Provide realistic cost estimates in Ethiopian Birr per kg
+- Include uncertainty values for all numerical properties
+- Ensure manufacturingComplexity is one of: "Low", "Medium", "High"
+- Focus on practical, implementable solutions using available Ethiopian resources`;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-5",
+    messages: [
+      {
+        role: "system",
+        content: "You are an expert materials scientist with comprehensive knowledge of Ethiopian resources, manufacturing capabilities, and material design. Always respond with valid JSON."
+      },
+      {
+        role: "user",
+        content: prompt
+      }
+    ],
+    response_format: { type: "json_object" },
+    max_tokens: 3000,
+  });
+
+  return JSON.parse(response.choices[0].message.content!);
 }

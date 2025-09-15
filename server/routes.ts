@@ -4,24 +4,31 @@ import { storage } from "./storage";
 import { 
   propertiesToCompositionSchema, 
   compositionToPropertiesSchema,
+  promptToPlanSchema,
   insertMaterialPredictionSchema,
   registerUserSchema,
   loginUserSchema
 } from "@shared/schema";
-import { predictCompositionFromProperties, predictPropertiesFromComposition } from "./services/aiService";
+import { predictCompositionFromProperties, predictPropertiesFromComposition, predictPlanFromPrompt } from "./services/aiService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Material prediction endpoints
   app.post("/api/predict/composition", async (req, res) => {
     try {
-      const validatedData = propertiesToCompositionSchema.parse(req.body.properties);
-      const prediction = await predictCompositionFromProperties(validatedData);
+      const parseResult = propertiesToCompositionSchema.safeParse(req.body.properties);
+      if (!parseResult.success) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid properties data: " + parseResult.error.errors.map(e => e.message).join(", ")
+        });
+      }
+      const prediction = await predictCompositionFromProperties(parseResult.data);
       
       // Store prediction
       const materialPrediction = await storage.createMaterialPrediction({
         userId: req.body.userId,
         predictionType: "properties-to-composition",
-        inputData: validatedData,
+        inputData: parseResult.data,
         outputData: prediction,
         confidence: prediction.confidence,
         aiModel: "openai",
@@ -39,14 +46,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/predict/properties", async (req, res) => {
     try {
-      const validatedData = compositionToPropertiesSchema.parse(req.body.composition);
-      const prediction = await predictPropertiesFromComposition(validatedData);
+      const parseResult = compositionToPropertiesSchema.safeParse(req.body.composition);
+      if (!parseResult.success) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid composition data: " + parseResult.error.errors.map(e => e.message).join(", ")
+        });
+      }
+      const prediction = await predictPropertiesFromComposition(parseResult.data);
       
       // Store prediction
       const materialPrediction = await storage.createMaterialPrediction({
         userId: req.body.userId,
         predictionType: "composition-to-properties",
-        inputData: validatedData,
+        inputData: parseResult.data,
         outputData: prediction,
         confidence: prediction.confidence,
         aiModel: "openai",
@@ -73,6 +86,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         success: false, 
         error: "Failed to retrieve prediction history." 
+      });
+    }
+  });
+
+  // New prompt-to-plan prediction endpoint
+  app.post("/api/predict/plan", async (req, res) => {
+    try {
+      const parseResult = promptToPlanSchema.safeParse(req.body.promptData);
+      if (!parseResult.success) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid prompt data: " + parseResult.error.errors.map(e => e.message).join(", ")
+        });
+      }
+      const prediction = await predictPlanFromPrompt(parseResult.data);
+      
+      // Store prediction
+      const materialPrediction = await storage.createMaterialPrediction({
+        userId: req.body.userId,
+        predictionType: "prompt-to-plan",
+        inputData: parseResult.data,
+        outputData: prediction,
+        confidence: prediction.confidence,
+        aiModel: "openai",
+      });
+
+      res.json({ success: true, prediction, id: materialPrediction.id });
+    } catch (error) {
+      console.error("Plan prediction error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to predict material plan. Please check your requirements and try again." 
       });
     }
   });

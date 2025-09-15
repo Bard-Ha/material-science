@@ -280,5 +280,15 @@ export const compositionToPropertiesSchema = z.object({
   })),
 });
 
+// New schema for free-form prompt predictions
+export const promptToPlanSchema = z.object({
+  purpose: z.string().min(10, "Please describe the intended purpose/function (at least 10 characters)"),
+  performanceRequirements: z.string().optional(),
+  materialConstraints: z.string().optional(),
+  environmentalConditions: z.string().optional(),
+  additionalDescription: z.string().optional(),
+});
+
 export type PropertiesToCompositionRequest = z.infer<typeof propertiesToCompositionSchema>;
 export type CompositionToPropertiesRequest = z.infer<typeof compositionToPropertiesSchema>;
+export type PromptToPlanRequest = z.infer<typeof promptToPlanSchema>;

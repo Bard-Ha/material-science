@@ -2,16 +2,17 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import PropertyForm from "@/components/PropertyForm";
 import CompositionForm from "@/components/CompositionForm";
+import PromptForm from "@/components/PromptForm";
 import PredictionResults from "@/components/PredictionResults";
 import PerformanceChart from "@/components/PerformanceChart";
 import EthiopianMaterials from "@/components/EthiopianMaterials";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Atom, Zap } from "lucide-react";
+import { Download, Atom, Zap, Brain } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<"properties" | "composition">("properties");
+  const [activeTab, setActiveTab] = useState<"properties" | "composition" | "prompt">("properties");
   const [predictionResult, setPredictionResult] = useState<any>(null);
   const [predictionId, setPredictionId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -121,6 +122,14 @@ export default function Dashboard() {
               >
                 Composition → Properties
               </Button>
+              <Button
+                onClick={() => setActiveTab("prompt")}
+                variant={activeTab === "prompt" ? "default" : "outline"}
+                data-testid="tab-ai-planner"
+              >
+                <Brain className="mr-2 h-4 w-4" />
+                AI Material Planner
+              </Button>
             </div>
           </CardHeader>
 
@@ -130,8 +139,10 @@ export default function Dashboard() {
               <div>
                 {activeTab === "properties" ? (
                   <PropertyForm onPredictionComplete={handlePredictionComplete} />
-                ) : (
+                ) : activeTab === "composition" ? (
                   <CompositionForm onPredictionComplete={handlePredictionComplete} />
+                ) : (
+                  <PromptForm onPredictionComplete={handlePredictionComplete} />
                 )}
               </div>
 
@@ -139,7 +150,7 @@ export default function Dashboard() {
               <div>
                 <PredictionResults 
                   result={predictionResult} 
-                  predictionType={activeTab}
+                  predictionType={activeTab === "prompt" ? "prompt-to-plan" : activeTab}
                 />
               </div>
             </div>

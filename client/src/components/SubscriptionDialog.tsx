@@ -162,16 +162,6 @@ export default function SubscriptionDialog({ children, user }: SubscriptionDialo
     }
   };
 
-  if (!open) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          {children}
-        </DialogTrigger>
-      </Dialog>
-    );
-  }
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

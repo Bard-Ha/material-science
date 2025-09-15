@@ -55,7 +55,10 @@ export default function CompositionForm({ onPredictionComplete }: CompositionFor
 
     setIsLoading(true);
     try {
+      // Get user data from localStorage
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
       const response = await apiRequest("POST", "/api/predict/properties", {
+        userId: userData.id,
         composition: data,
       });
 

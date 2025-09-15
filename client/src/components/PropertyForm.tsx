@@ -39,7 +39,10 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
   const onSubmit = async (data: PropertiesToCompositionRequest) => {
     setIsLoading(true);
     try {
+      // Get user data from localStorage
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
       const response = await apiRequest("POST", "/api/predict/composition", {
+        userId: userData.id,
         properties: data,
       });
 

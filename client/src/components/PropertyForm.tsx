@@ -78,9 +78,9 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           {/* Mechanical Properties */}
           <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Cog className="mr-3 h-5 w-5 text-primary animate-atomic-pulse" />
-                🔧 Mechanical Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Cog className="mr-3 h-5 w-5 text-primary" />
+                Mechanical Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Define structural and mechanical characteristics</p>
             </CardHeader>
@@ -269,11 +269,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Thermal Properties */}
-          <Card className="property-card animate-energy-wave shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Thermometer className="mr-3 h-5 w-5 text-secondary animate-particle-drift" />
-                🌡️ Thermal Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Thermometer className="mr-3 h-5 w-5 text-secondary" />
+                Thermal Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Configure temperature-related behaviors</p>
             </CardHeader>
@@ -421,11 +421,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Electrical Properties */}
-          <Card className="property-card animate-quantum-shimmer shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Zap className="mr-3 h-5 w-5 text-accent animate-atomic-glow" />
-                ⚡ Electrical Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Zap className="mr-3 h-5 w-5 text-accent" />
+                Electrical Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Set electrical conductivity parameters</p>
             </CardHeader>
@@ -472,11 +472,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Chemical Properties */}
-          <Card className="property-card animate-molecular-float shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <FlaskConical className="mr-3 h-5 w-5 text-destructive animate-energy-wave" />
-                🧪 Chemical Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <FlaskConical className="mr-3 h-5 w-5 text-destructive" />
+                Chemical Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Define chemical stability and resistance</p>
             </CardHeader>
@@ -527,11 +527,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Optical Properties */}
-          <Card className="property-card animate-atomic-pulse shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Eye className="mr-3 h-5 w-5 text-chart-4 animate-molecular-float" />
-                👁️ Optical Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Eye className="mr-3 h-5 w-5 text-blue-500" />
+                Optical Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Configure light interaction characteristics</p>
             </CardHeader>
@@ -624,11 +624,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Physical Properties */}
-          <Card className="property-card animate-particle-drift shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Package className="mr-3 h-5 w-5 text-chart-1 animate-quantum-shimmer" />
-                📦 Physical Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Package className="mr-3 h-5 w-5 text-blue-500" />
+                Physical Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Set fundamental physical characteristics</p>
             </CardHeader>
@@ -720,11 +720,11 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           </Card>
 
           {/* Manufacturing Properties */}
-          <Card className="property-card animate-energy-wave shadow-xl">
+          <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Factory className="mr-3 h-5 w-5 text-accent animate-atomic-pulse" />
-                🏭 Manufacturing Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Factory className="mr-3 h-5 w-5 text-orange-500" />
+                Manufacturing Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Configure production and processing parameters</p>
             </CardHeader>
@@ -830,9 +830,9 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           {/* Environmental Properties */}
           <Card className="property-card animate-molecular-border shadow-xl">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-bold flex items-center material-text">
-                <Leaf className="mr-3 h-5 w-5 text-chart-3 animate-molecular-float" />
-                🌿 Environmental Properties
+              <CardTitle className="text-lg font-bold flex items-center">
+                <Leaf className="mr-3 h-5 w-5 text-green-500" />
+                Environmental Properties
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">Define environmental impact and sustainability</p>
             </CardHeader>
@@ -913,19 +913,12 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
 
           <Button 
             type="submit" 
-            className="w-full atomic-button h-14 text-lg font-bold shadow-2xl" 
+            className="w-full atomic-button h-12 text-lg font-bold" 
             disabled={isLoading}
             data-testid="button-run-prediction"
           >
-            <Brain className="mr-3 h-6 w-6 animate-atomic-pulse" />
-            {isLoading ? (
-              <>
-                <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-                🤖 AI Analyzing...
-              </>
-            ) : (
-              "🎆 Generate AI Prediction"
-            )}
+            <Brain className="mr-2 h-4 w-4" />
+            {isLoading ? "Running AI Prediction..." : "Run AI Prediction"}
           </Button>
         </form>
       </Form>

@@ -87,15 +87,19 @@ export default function CompositionForm({ onPredictionComplete }: CompositionFor
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h4 className="text-md font-semibold text-foreground">Input Material Composition</h4>
+        <h4 className="text-xl font-bold text-foreground material-text">🧪 Input Material Composition</h4>
+        <p className="text-sm text-muted-foreground mt-1">Define element percentages for property prediction</p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <Card className="bg-muted/50">
+          <Card className="molecular-card bg-gradient-to-r from-background to-muted/30 border-2 border-primary/20 shadow-lg">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Element Composition (%)</CardTitle>
-              <div className="text-xs text-muted-foreground">
+              <CardTitle className="text-lg font-semibold flex items-center">
+                <Calculator className="mr-2 h-5 w-5 text-primary animate-atomic-pulse" />
+                Element Composition (%)
+              </CardTitle>
+              <div className="text-sm font-medium text-muted-foreground">
                 Total: {totalPercentage.toFixed(1)}% 
                 {Math.abs(totalPercentage - 100) > 0.1 && (
                   <span className="text-destructive ml-2">Must equal 100%</span>

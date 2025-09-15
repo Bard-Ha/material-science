@@ -57,6 +57,8 @@ export default function Layout({ children }: LayoutProps) {
             <nav className="hidden md:flex space-x-6">
               <NavLink href="/dashboard" icon={Zap}>Dashboard</NavLink>
               <NavLink href="/analysis" icon={BarChart3}>Analysis</NavLink>
+              <NavLink href="/database" icon={Database}>Database</NavLink>
+              <NavLink href="/ai-lab" icon={Brain}>AI Lab</NavLink>
             </nav>
 
             {/* User Menu */}

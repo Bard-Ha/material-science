@@ -69,13 +69,14 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h4 className="text-md font-semibold text-foreground">Define Material Properties</h4>
+        <h4 className="text-xl font-bold text-foreground material-text">🎯 Define Material Properties</h4>
+        <p className="text-sm text-muted-foreground mt-1">Specify desired properties for AI composition prediction</p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Mechanical Properties */}
-          <Card className="bg-muted/50">
+          <Card className="molecular-card bg-gradient-to-r from-background to-muted/30 border-2 border-primary/20 shadow-lg">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Cog className="mr-2 h-4 w-4 text-primary" />
@@ -88,7 +89,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.tensileStrength"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Tensile Strength (MPa)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Tensile Strength (MPa)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -108,7 +109,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.youngsModulus"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Young's Modulus (GPa)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Young's Modulus (GPa)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -128,7 +129,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.hardness"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Hardness (HV)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Hardness (HV)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -148,7 +149,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.elongation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Elongation (%)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Elongation (%)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -168,7 +169,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.yieldStrength"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Yield Strength (MPa)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Yield Strength (MPa)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -188,7 +189,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.compressiveStrength"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Compressive Strength (MPa)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Compressive Strength (MPa)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -208,7 +209,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.flexuralStrength"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Flexural Strength (MPa)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Flexural Strength (MPa)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -228,7 +229,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.impactStrength"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Impact Strength (J/m)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Impact Strength (J/m)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -248,7 +249,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="mechanicalProperties.poissonsRatio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Poisson's Ratio</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Poisson's Ratio</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -280,7 +281,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.meltingPoint"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Melting Point (°C)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Melting Point (°C)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -300,7 +301,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.thermalConductivity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Thermal Conductivity (W/m·K)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Thermal Conductivity (W/m·K)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -320,7 +321,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.thermalExpansion"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Thermal Expansion (µm/m·K)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Thermal Expansion (µm/m·K)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -340,7 +341,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.specificHeat"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Specific Heat (J/kg·K)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Specific Heat (J/kg·K)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -360,7 +361,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.boilingPoint"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Boiling Point (°C)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Boiling Point (°C)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -380,7 +381,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.glassTransitionTemp"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Glass Transition Temp (°C)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Glass Transition Temp (°C)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -400,7 +401,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="thermalProperties.maxServiceTemp"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Max Service Temp (°C)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Max Service Temp (°C)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -431,7 +432,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="electricalProperties.electricalResistivity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Electrical Resistivity (Ω·m)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Electrical Resistivity (Ω·m)</FormLabel>
                     <FormControl>
                       <Input 
                         type="text" 
@@ -450,7 +451,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="electricalProperties.dielectricConstant"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Dielectric Constant</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Dielectric Constant</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -481,7 +482,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="chemicalProperties.corrosionResistance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Corrosion Resistance</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Corrosion Resistance</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-corrosion-resistance">
@@ -505,7 +506,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="chemicalProperties.phStabilityRange"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">pH Stability Range</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">pH Stability Range</FormLabel>
                     <FormControl>
                       <Input 
                         type="text" 
@@ -535,7 +536,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="opticalProperties.refractiveIndex"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Refractive Index</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Refractive Index</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -556,7 +557,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="opticalProperties.transparency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Transparency</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Transparency</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-transparency">
@@ -579,7 +580,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="opticalProperties.reflectance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Reflectance (%)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Reflectance (%)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -599,7 +600,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="opticalProperties.emissivity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Emissivity</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Emissivity</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -631,7 +632,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="physicalProperties.density"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Density (g/cm³)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Density (g/cm³)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -652,7 +653,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="physicalProperties.porosity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Porosity (%)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Porosity (%)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -672,7 +673,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="physicalProperties.viscosity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Viscosity (Pa·s)</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Viscosity (Pa·s)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -692,7 +693,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="physicalProperties.wettability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Wettability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Wettability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-wettability">
@@ -726,7 +727,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="manufacturingProperties.machinability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Machinability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Machinability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-machinability">
@@ -750,7 +751,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="manufacturingProperties.weldability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Weldability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Weldability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-weldability">
@@ -774,7 +775,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="manufacturingProperties.formability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Formability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Formability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-formability">
@@ -798,7 +799,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="manufacturingProperties.castability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Castability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Castability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-castability">
@@ -833,7 +834,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="environmentalProperties.weatherResistance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Weather Resistance</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Weather Resistance</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-weather-resistance">
@@ -857,7 +858,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="environmentalProperties.uvResistance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">UV Resistance</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">UV Resistance</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-uv-resistance">
@@ -881,7 +882,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
                 name="environmentalProperties.biodegradability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs text-muted-foreground">Biodegradability</FormLabel>
+                    <FormLabel className="text-sm font-medium text-foreground">Biodegradability</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-biodegradability">

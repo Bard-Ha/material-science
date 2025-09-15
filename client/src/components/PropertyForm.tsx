@@ -525,7 +525,7 @@ export default function PropertyForm({ onPredictionComplete }: PropertyFormProps
           <Card className="bg-muted/50">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium flex items-center">
-                <Eye className="mr-2 h-4 w-4 text-purple-500" />
+                <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 Optical Properties
               </CardTitle>
             </CardHeader>

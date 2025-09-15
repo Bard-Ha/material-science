@@ -148,7 +148,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         aiModel: prediction.aiModel,
         generatedAt: prediction.createdAt,
         exportedAt: new Date().toISOString(),
-        platform: "Simien Materials AI - Advanced Material Discovery Platform"
+        platform: "Mat-Sci-AI - Advanced Material Discovery Platform"
       };
 
       res.setHeader('Content-Type', 'application/json');

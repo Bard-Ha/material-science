@@ -7,7 +7,7 @@ import PerformanceChart from "@/components/PerformanceChart";
 import EthiopianMaterials from "@/components/EthiopianMaterials";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download } from "lucide-react";
+import { Download, Atom, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
@@ -68,9 +68,14 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Page Header */}
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold text-foreground">Material Discovery</h2>
-            <p className="text-muted-foreground mt-1">AI-powered material composition and property prediction</p>
+          <div className="flex items-center space-x-4">
+            <div className="atomic-structure">
+              <Atom className="h-8 w-8 text-blue-500 animate-atomic-pulse" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-foreground material-text">Material Discovery</h2>
+              <p className="text-muted-foreground mt-1">AI-powered material composition and property prediction</p>
+            </div>
           </div>
           <Button 
             onClick={handleExportResults}
@@ -83,9 +88,12 @@ export default function Dashboard() {
         </div>
 
         {/* Input Method Selection */}
-        <Card>
+        <Card className="molecular-card">
           <CardHeader>
-            <CardTitle>Discovery Method</CardTitle>
+            <CardTitle className="flex items-center">
+              <Zap className="mr-2 h-5 w-5 animate-molecular-float" />
+              Discovery Method
+            </CardTitle>
             <div className="flex space-x-4">
               <Button
                 onClick={() => setActiveTab("properties")}
@@ -128,9 +136,14 @@ export default function Dashboard() {
 
         {/* Performance Analysis Dashboard */}
         {predictionResult && (
-          <Card>
+          <Card className="molecular-card">
             <CardHeader>
-              <CardTitle>Performance Analysis Dashboard</CardTitle>
+              <CardTitle className="flex items-center">
+                <div className="atomic-structure mr-3">
+                  <Atom className="h-5 w-5 text-emerald-500 animate-molecular-float" />
+                </div>
+                Performance Analysis Dashboard
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <PerformanceChart result={predictionResult} />

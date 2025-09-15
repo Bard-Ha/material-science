@@ -40,6 +40,7 @@ import {
   Filter,
   Download,
   RefreshCw,
+  Atom,
 } from "lucide-react";
 
 interface Prediction {
@@ -109,7 +110,7 @@ export default function Analysis() {
     { 
       name: 'Properties to Composition', 
       value: predictions.filter(p => p.predictionType === 'properties-to-composition').length,
-      color: '#8b5cf6'
+      color: '#3b82f6'
     },
     { 
       name: 'Composition to Properties', 
@@ -123,8 +124,8 @@ export default function Analysis() {
       title: "Total Predictions",
       value: predictions.length,
       icon: Brain,
-      color: "text-purple-500",
-      bgColor: "bg-purple-100",
+      color: "text-blue-500",
+      bgColor: "bg-blue-100",
     },
     {
       title: "Average Confidence",
@@ -156,10 +157,10 @@ export default function Analysis() {
       case "trends":
         return (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gradient-to-br from-background to-muted/30 border-primary/20">
+            <Card className="molecular-card">
               <CardHeader>
                 <CardTitle className="flex items-center text-primary">
-                  <Activity className="mr-2 h-5 w-5" />
+                  <Activity className="mr-2 h-5 w-5 animate-molecular-float" />
                   Prediction Trends
                 </CardTitle>
               </CardHeader>
@@ -181,10 +182,10 @@ export default function Analysis() {
                     <Line 
                       type="monotone" 
                       dataKey="predictions" 
-                      stroke="#8b5cf6" 
+                      stroke="#3b82f6" 
                       strokeWidth={3}
                       name="Daily Predictions"
-                      dot={{ fill: '#8b5cf6', r: 6 }}
+                      dot={{ fill: '#3b82f6', r: 6 }}
                     />
                     <Line 
                       type="monotone" 
@@ -199,10 +200,10 @@ export default function Analysis() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-background to-muted/30 border-primary/20">
+            <Card className="molecular-card">
               <CardHeader>
                 <CardTitle className="flex items-center text-primary">
-                  <BarChart3 className="mr-2 h-5 w-5" />
+                  <BarChart3 className="mr-2 h-5 w-5 animate-molecular-float" />
                   Confidence Distribution
                 </CardTitle>
               </CardHeader>
@@ -227,7 +228,7 @@ export default function Analysis() {
                     />
                     <defs>
                       <linearGradient id="confidenceGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
                         <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.3}/>
                       </linearGradient>
                     </defs>
@@ -329,7 +330,7 @@ export default function Analysis() {
                       <div className="flex-1">
                         <Badge 
                           variant="outline" 
-                          className={prediction.predictionType === 'properties-to-composition' ? 'border-purple-300 text-purple-700' : 'border-blue-300 text-blue-700'}
+                          className={prediction.predictionType === 'properties-to-composition' ? 'border-blue-300 text-blue-700' : 'border-emerald-300 text-emerald-700'}
                         >
                           {prediction.predictionType === 'properties-to-composition' ? 'Properties → Composition' : 'Composition → Properties'}
                         </Badge>
@@ -381,13 +382,18 @@ export default function Analysis() {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-          <div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Material Analysis
-            </h2>
-            <p className="text-muted-foreground mt-1">
-              Comprehensive insights and analytics for your material predictions
-            </p>
+          <div className="flex items-center space-x-4">
+            <div className="atomic-structure">
+              <Atom className="h-8 w-8 text-emerald-500 animate-atomic-pulse" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold material-text">
+                Material Analysis
+              </h2>
+              <p className="text-muted-foreground mt-1">
+                Comprehensive insights and analytics for your material predictions
+              </p>
+            </div>
           </div>
           
           <div className="flex items-center space-x-3">
@@ -405,7 +411,7 @@ export default function Analysis() {
         {/* Performance Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {performanceMetrics.map((metric, index) => (
-            <Card key={index} className="bg-gradient-to-br from-background to-muted/30 border-primary/20 hover:shadow-lg transition-all duration-300">
+            <Card key={index} className="molecular-card hover:shadow-lg transition-all duration-300 hover:animate-atomic-glow">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>

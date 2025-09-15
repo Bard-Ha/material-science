@@ -11,32 +11,32 @@
   --card-foreground: hsl(210 40% 95%);
   --popover: hsl(224 25% 8%);
   --popover-foreground: hsl(210 40% 95%);
-  --primary: hsl(263 70% 65%);
+  --primary: hsl(217 91% 60%);
   --primary-foreground: hsl(210 40% 98%);
   --secondary: hsl(180 100% 50%);
   --secondary-foreground: hsl(210 40% 98%);
   --muted: hsl(225 25% 12%);
   --muted-foreground: hsl(215.4 16.3% 65%);
-  --accent: hsl(280 100% 70%);
+  --accent: hsl(142 71% 45%);
   --accent-foreground: hsl(210 40% 98%);
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(210 40% 98%);
-  --border: hsl(263 70% 25%);
+  --border: hsl(217 91% 25%);
   --input: hsl(225 25% 15%);
-  --ring: hsl(263 70% 65%);
-  --chart-1: hsl(263 70% 65%);
-  --chart-2: hsl(180 100% 50%);
-  --chart-3: hsl(280 100% 70%);
+  --ring: hsl(217 91% 60%);
+  --chart-1: hsl(217 91% 60%);
+  --chart-2: hsl(158 64% 52%);
+  --chart-3: hsl(142 71% 45%);
   --chart-4: hsl(120 100% 60%);
   --chart-5: hsl(0 84.2% 60.2%);
   --sidebar: hsl(224 25% 8%);
   --sidebar-foreground: hsl(210 40% 95%);
-  --sidebar-primary: hsl(263 70% 65%);
+  --sidebar-primary: hsl(217 91% 60%);
   --sidebar-primary-foreground: hsl(210 40% 98%);
   --sidebar-accent: hsl(225 25% 12%);
-  --sidebar-accent-foreground: hsl(263 70% 65%);
-  --sidebar-border: hsl(263 70% 25%);
-  --sidebar-ring: hsl(263 70% 65%);
+  --sidebar-accent-foreground: hsl(217 91% 60%);
+  --sidebar-border: hsl(217 91% 25%);
+  --sidebar-ring: hsl(217 91% 60%);
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
@@ -60,32 +60,32 @@
   --card-foreground: hsl(210 40% 95%);
   --popover: hsl(224 25% 8%);
   --popover-foreground: hsl(210 40% 95%);
-  --primary: hsl(263 70% 65%);
+  --primary: hsl(217 91% 60%);
   --primary-foreground: hsl(210 40% 98%);
   --secondary: hsl(180 100% 50%);
   --secondary-foreground: hsl(210 40% 98%);
   --muted: hsl(225 25% 12%);
   --muted-foreground: hsl(215.4 16.3% 65%);
-  --accent: hsl(280 100% 70%);
+  --accent: hsl(142 71% 45%);
   --accent-foreground: hsl(210 40% 98%);
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(210 40% 98%);
-  --border: hsl(263 70% 25%);
+  --border: hsl(217 91% 25%);
   --input: hsl(225 25% 15%);
-  --ring: hsl(263 70% 65%);
-  --chart-1: hsl(263 70% 65%);
-  --chart-2: hsl(180 100% 50%);
-  --chart-3: hsl(280 100% 70%);
+  --ring: hsl(217 91% 60%);
+  --chart-1: hsl(217 91% 60%);
+  --chart-2: hsl(158 64% 52%);
+  --chart-3: hsl(142 71% 45%);
   --chart-4: hsl(120 100% 60%);
   --chart-5: hsl(0 84.2% 60.2%);
   --sidebar: hsl(224 25% 8%);
   --sidebar-foreground: hsl(210 40% 95%);
-  --sidebar-primary: hsl(263 70% 65%);
+  --sidebar-primary: hsl(217 91% 60%);
   --sidebar-primary-foreground: hsl(210 40% 98%);
   --sidebar-accent: hsl(225 25% 12%);
-  --sidebar-accent-foreground: hsl(263 70% 65%);
-  --sidebar-border: hsl(263 70% 25%);
-  --sidebar-ring: hsl(263 70% 65%);
+  --sidebar-accent-foreground: hsl(217 91% 60%);
+  --sidebar-border: hsl(217 91% 25%);
+  --sidebar-ring: hsl(217 91% 60%);
 }
 
 @layer base {
@@ -99,11 +99,11 @@
   }
 }
 
-/* Quantum Grid Background */
+/* Molecular Grid Background */
 .bg-grid-16 {
   background-image: 
-    linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
   background-size: 16px 16px;
 }
 
@@ -113,75 +113,84 @@
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
-/* Quantum Animations */
-@keyframes quantum-pulse {
+/* Atomic & Molecular Animations */
+@keyframes atomic-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.7; transform: scale(1.05); }
 }
 
-@keyframes quantum-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+@keyframes molecular-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(180deg); }
 }
 
-@keyframes quantum-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+@keyframes atomic-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
 }
 
-@keyframes quantum-border {
-  0% { border-color: rgba(139, 92, 246, 0.3); }
-  25% { border-color: rgba(6, 182, 212, 0.6); }
-  50% { border-color: rgba(168, 85, 247, 0.8); }
-  75% { border-color: rgba(6, 182, 212, 0.6); }
-  100% { border-color: rgba(139, 92, 246, 0.3); }
+@keyframes molecular-border {
+  0% { border-color: rgba(59, 130, 246, 0.3); }
+  25% { border-color: rgba(16, 185, 129, 0.6); }
+  50% { border-color: rgba(34, 197, 94, 0.8); }
+  75% { border-color: rgba(16, 185, 129, 0.6); }
+  100% { border-color: rgba(59, 130, 246, 0.3); }
 }
 
-.animate-quantum-pulse {
-  animation: quantum-pulse 3s ease-in-out infinite;
+@keyframes atom-orbit {
+  0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
 }
 
-.animate-quantum-float {
-  animation: quantum-float 4s ease-in-out infinite;
+.animate-atomic-pulse {
+  animation: atomic-pulse 3s ease-in-out infinite;
 }
 
-.animate-quantum-glow {
-  animation: quantum-glow 2s ease-in-out infinite;
+.animate-molecular-float {
+  animation: molecular-float 4s ease-in-out infinite;
 }
 
-.animate-quantum-border {
-  animation: quantum-border 4s linear infinite;
+.animate-atomic-glow {
+  animation: atomic-glow 2s ease-in-out infinite;
 }
 
-/* Quantum Card Effects */
-.quantum-card {
+.animate-molecular-border {
+  animation: molecular-border 4s linear infinite;
+}
+
+.animate-atom-orbit {
+  animation: atom-orbit 8s linear infinite;
+}
+
+/* Molecular Card Effects */
+.molecular-card {
   background: linear-gradient(135deg, 
-    rgba(139, 92, 246, 0.1) 0%, 
-    rgba(6, 182, 212, 0.05) 50%, 
-    rgba(168, 85, 247, 0.1) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+    rgba(59, 130, 246, 0.1) 0%, 
+    rgba(16, 185, 129, 0.05) 50%, 
+    rgba(34, 197, 94, 0.1) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   backdrop-filter: blur(20px);
   transition: all 0.3s ease;
 }
 
-.quantum-card:hover {
-  border-color: rgba(139, 92, 246, 0.6);
-  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+.molecular-card:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
   transform: translateY(-2px);
 }
 
-/* Quantum Button Effects */
-.quantum-button {
+/* Atomic Button Effects */
+.atomic-button {
   background: linear-gradient(135deg, 
-    rgba(139, 92, 246, 0.8) 0%, 
-    rgba(168, 85, 247, 0.9) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.5);
+    rgba(59, 130, 246, 0.8) 0%, 
+    rgba(16, 185, 129, 0.9) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.5);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.quantum-button::before {
+.atomic-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -195,32 +204,59 @@
   transition: left 0.5s ease;
 }
 
-.quantum-button:hover::before {
+.atomic-button:hover::before {
   left: 100%;
 }
 
-.quantum-button:hover {
-  box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+.atomic-button:hover {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
   transform: translateY(-1px);
 }
 
-/* Quantum Text Effects */
-.quantum-text {
+/* Material Text Effects */
+.material-text {
   background: linear-gradient(135deg, 
-    #8b5cf6 0%, 
-    #06b6d4 50%, 
-    #a855f7 100%);
+    #3b82f6 0%, 
+    #10b981 50%, 
+    #22c55e 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: quantum-gradient 3s ease infinite;
+  animation: material-gradient 3s ease infinite;
 }
 
-@keyframes quantum-gradient {
+@keyframes material-gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* Atomic Structure Animation */
+.atomic-structure {
+  position: relative;
+  display: inline-block;
+}
+
+.atomic-structure::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(59, 130, 246, 0.8);
+  border-radius: 50%;
+  animation: atom-orbit 3s linear infinite;
+}
+
+.atomic-structure::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(16, 185, 129, 0.8);
+  border-radius: 50%;
+  animation: atom-orbit 4s linear infinite reverse;
+  animation-delay: -1s;
 }
 
 /* Neon Effects */

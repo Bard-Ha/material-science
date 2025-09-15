@@ -6,7 +6,37 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  subscriptionTier: text("subscription_tier").default("free"), // free, basic, premium
+  subscriptionExpiry: timestamp("subscription_expiry"),
+  createdAt: timestamp("created_at").defaultNow(),
+  lastLogin: timestamp("last_login"),
+});
+
+export const subscriptionPlans = pgTable("subscription_plans", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  description: text("description"),
+  priceInBirr: real("price_in_birr").notNull(),
+  durationInDays: integer("duration_in_days").notNull(),
+  features: jsonb("features").notNull(), // Array of features
+  isActive: integer("is_active").default(1),
+});
+
+export const paymentTransactions = pgTable("payment_transactions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  planId: varchar("plan_id").notNull(),
+  amount: real("amount").notNull(),
+  currency: text("currency").default("ETB"),
+  paymentMethod: text("payment_method").notNull(), // telebirr, mpesa, cbe, abyssinia
+  transactionId: text("transaction_id"),
+  status: text("status").default("pending"), // pending, completed, failed
+  createdAt: timestamp("created_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
 });
 
 export const materialPredictions = pgTable("material_predictions", {
@@ -104,9 +134,33 @@ export const materialComposition = pgTable("material_composition", {
 });
 
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).pick({
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+  lastLogin: true,
+});
+
+export const registerUserSchema = insertUserSchema.pick({
   username: true,
+  email: true,
   password: true,
+  firstName: true,
+  lastName: true,
+});
+
+export const loginUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+export const insertSubscriptionPlanSchema = createInsertSchema(subscriptionPlans).omit({
+  id: true,
+});
+
+export const insertPaymentTransactionSchema = createInsertSchema(paymentTransactions).omit({
+  id: true,
+  createdAt: true,
+  completedAt: true,
 });
 
 export const insertMaterialPredictionSchema = createInsertSchema(materialPredictions).omit({
@@ -128,7 +182,13 @@ export const insertMaterialCompositionSchema = createInsertSchema(materialCompos
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type RegisterUser = z.infer<typeof registerUserSchema>;
+export type LoginUser = z.infer<typeof loginUserSchema>;
 export type User = typeof users.$inferSelect;
+export type InsertSubscriptionPlan = z.infer<typeof insertSubscriptionPlanSchema>;
+export type SubscriptionPlan = typeof subscriptionPlans.$inferSelect;
+export type InsertPaymentTransaction = z.infer<typeof insertPaymentTransactionSchema>;
+export type PaymentTransaction = typeof paymentTransactions.$inferSelect;
 export type InsertMaterialPrediction = z.infer<typeof insertMaterialPredictionSchema>;
 export type MaterialPrediction = typeof materialPredictions.$inferSelect;
 export type InsertEthiopianMaterial = z.infer<typeof insertEthiopianMaterialSchema>;

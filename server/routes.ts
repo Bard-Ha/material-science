@@ -4,7 +4,9 @@ import { storage } from "./storage";
 import { 
   propertiesToCompositionSchema, 
   compositionToPropertiesSchema,
-  insertMaterialPredictionSchema 
+  insertMaterialPredictionSchema,
+  registerUserSchema,
+  loginUserSchema
 } from "@shared/schema";
 import { predictCompositionFromProperties, predictPropertiesFromComposition } from "./services/aiService";
 
@@ -128,6 +130,193 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Authentication endpoints
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const validatedData = registerUserSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(validatedData.email);
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          error: "An account with this email already exists."
+        });
+      }
+
+      const existingUsername = await storage.getUserByUsername(validatedData.username);
+      if (existingUsername) {
+        return res.status(400).json({
+          success: false,
+          error: "This username is already taken."
+        });
+      }
+
+      const user = await storage.createUser(validatedData);
+      
+      // Don't return password in response
+      const { password, ...userResponse } = user;
+      res.status(201).json({ 
+        success: true, 
+        user: userResponse,
+        message: "Account created successfully! Welcome to Mat-Sci-AI." 
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to create account. Please try again." 
+      });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const validatedData = loginUserSchema.parse(req.body);
+      
+      const user = await storage.getUserByEmail(validatedData.email);
+      if (!user || user.password !== validatedData.password) {
+        return res.status(401).json({
+          success: false,
+          error: "Invalid email or password."
+        });
+      }
+
+      // Update last login
+      await storage.updateUser(user.id, { lastLogin: new Date() });
+
+      // Don't return password in response
+      const { password, ...userResponse } = user;
+      res.json({ 
+        success: true, 
+        user: userResponse,
+        message: "Welcome back!" 
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to sign in. Please try again." 
+      });
+    }
+  });
+
+  // Subscription endpoints
+  app.get("/api/subscription-plans", async (req, res) => {
+    try {
+      const plans = await storage.getSubscriptionPlans();
+      res.json({ success: true, plans });
+    } catch (error) {
+      console.error("Get subscription plans error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to retrieve subscription plans." 
+      });
+    }
+  });
+
+  app.post("/api/payments/initiate", async (req, res) => {
+    try {
+      const { userId, planId, paymentMethod } = req.body;
+      
+      const plan = await storage.getSubscriptionPlan(planId);
+      if (!plan) {
+        return res.status(404).json({
+          success: false,
+          error: "Subscription plan not found."
+        });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: "User not found."
+        });
+      }
+
+      // Create payment transaction
+      const transaction = await storage.createPaymentTransaction({
+        userId,
+        planId,
+        amount: plan.priceInBirr,
+        currency: "ETB",
+        paymentMethod,
+        status: "pending"
+      });
+
+      // In a real implementation, you would integrate with Ethiopian payment APIs here
+      // For now, we'll simulate payment processing
+      const paymentResponse = await simulateEthiopianPayment(paymentMethod, plan.priceInBirr, transaction.id);
+
+      res.json({ 
+        success: true, 
+        transaction,
+        paymentInstructions: paymentResponse
+      });
+    } catch (error) {
+      console.error("Payment initiation error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to initiate payment. Please try again." 
+      });
+    }
+  });
+
+  app.post("/api/payments/verify/:transactionId", async (req, res) => {
+    try {
+      const transaction = await storage.getPaymentTransaction(req.params.transactionId);
+      if (!transaction) {
+        return res.status(404).json({
+          success: false,
+          error: "Transaction not found."
+        });
+      }
+
+      // In a real implementation, verify with payment provider
+      // For now, simulate verification
+      const isVerified = await simulatePaymentVerification(transaction.paymentMethod, transaction.transactionId);
+
+      if (isVerified) {
+        // Update transaction status
+        await storage.updatePaymentTransaction(transaction.id, { 
+          status: "completed",
+          completedAt: new Date()
+        });
+
+        // Update user subscription
+        const plan = await storage.getSubscriptionPlan(transaction.planId);
+        if (plan) {
+          const expiryDate = new Date();
+          expiryDate.setDate(expiryDate.getDate() + plan.durationInDays);
+          
+          await storage.updateUser(transaction.userId, {
+            subscriptionTier: plan.name.toLowerCase(),
+            subscriptionExpiry: expiryDate
+          });
+        }
+
+        res.json({ 
+          success: true, 
+          message: "Payment verified successfully! Your subscription is now active.",
+          status: "completed"
+        });
+      } else {
+        await storage.updatePaymentTransaction(transaction.id, { status: "failed" });
+        res.status(400).json({
+          success: false,
+          error: "Payment verification failed. Please try again."
+        });
+      }
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to verify payment." 
+      });
+    }
+  });
+
   // Export functionality
   app.post("/api/export/prediction/:id", async (req, res) => {
     try {
@@ -165,4 +354,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
   return httpServer;
+}
+
+// Ethiopian payment simulation functions
+async function simulateEthiopianPayment(paymentMethod: string, amount: number, transactionId: string) {
+  const paymentInstructions: Record<string, any> = {
+    telebirr: {
+      shortCode: "*127#",
+      steps: [
+        "Dial *127# from your phone",
+        "Select 'Pay Bills' option",
+        "Enter Merchant Code: 500001",
+        `Enter Amount: ${amount} ETB`,
+        `Enter Reference: ${transactionId}`,
+        "Confirm payment with PIN"
+      ],
+      estimatedTime: "2-5 minutes",
+      supportPhone: "+251-911-123456"
+    },
+    mpesa: {
+      shortCode: "*150#", 
+      steps: [
+        "Dial *150# from your phone",
+        "Select 'Lipa na M-PESA'",
+        "Enter Business Number: 247247",
+        `Enter Amount: ${amount} ETB`,
+        `Enter Account Reference: ${transactionId}`,
+        "Enter PIN and confirm"
+      ],
+      estimatedTime: "1-3 minutes",
+      supportPhone: "+251-700-100200"
+    },
+    cbe: {
+      appName: "CBE Birr",
+      steps: [
+        "Open CBE Birr mobile app",
+        "Login with your credentials",
+        "Select 'Pay Bills'",
+        "Search for 'Mat-Sci-AI'",
+        `Enter Amount: ${amount} ETB`,
+        `Enter Reference: ${transactionId}`,
+        "Confirm with PIN/Biometrics"
+      ],
+      estimatedTime: "1-2 minutes", 
+      supportPhone: "+251-111-123456"
+    },
+    abyssinia: {
+      appName: "Abyssinia Mobile Banking",
+      steps: [
+        "Open Abyssinia Mobile Banking app",
+        "Login with your credentials", 
+        "Select 'Bill Payment'",
+        "Choose 'E-commerce'",
+        `Enter Amount: ${amount} ETB`,
+        `Enter Merchant Reference: ${transactionId}`,
+        "Authorize with PIN/Fingerprint"
+      ],
+      estimatedTime: "2-4 minutes",
+      supportPhone: "+251-116-680000"
+    }
+  };
+
+  return paymentInstructions[paymentMethod] || {
+    error: "Unsupported payment method",
+    supportedMethods: ["telebirr", "mpesa", "cbe", "abyssinia"]
+  };
+}
+
+async function simulatePaymentVerification(paymentMethod: string, transactionId: string | null): Promise<boolean> {
+  // In a real implementation, this would call the actual payment provider APIs
+  // For demo purposes, we'll simulate a 90% success rate
+  return Math.random() > 0.1;
 }
